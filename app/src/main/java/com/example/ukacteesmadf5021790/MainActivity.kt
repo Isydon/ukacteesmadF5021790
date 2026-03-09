@@ -31,4 +31,4 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
 
-        Greeting("Android") }
+        Greeting("Israel") }
