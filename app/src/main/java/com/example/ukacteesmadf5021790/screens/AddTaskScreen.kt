@@ -13,7 +13,7 @@ fun AddTaskScreen(
     onBack: () -> Unit
 ) {
     var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("                                                             ") }
 
     Column(
         modifier = Modifier

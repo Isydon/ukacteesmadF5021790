@@ -19,7 +19,8 @@ fun AppNavGraph() {
     var tasks by remember {
         mutableStateOf(
             listOf(
-                Task(1, "Sample Task", "This is a sample task")
+                Task(1, "Sample Task", "This is a sample task"),
+                Task(1, "Israel Text", "This is a sample task"),
             )
         )
     }
