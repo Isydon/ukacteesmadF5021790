@@ -14,11 +14,14 @@ import com.example.ukacteesmadf5021790.model.Task
 @Composable
 fun AddTaskScreen(
     onSave: (Task) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    existingTask: Task? = null
 ) {
-    var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf(existingTask?.title ?: "") }
+    var description by remember { mutableStateOf(existingTask?.description ?: "") }
     var errorMessage by remember { mutableStateOf("") }
+
+    val isEditMode = existingTask != null
 
     Column(
         modifier = Modifier
@@ -29,17 +32,9 @@ fun AddTaskScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = "Add New Task",
+            text = if (isEditMode) "Edit Task" else "Add New Task",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(6.dp))
-
-        Text(
-            text = "Create a task and keep track of your academic activities.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.DarkGray
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -50,9 +45,7 @@ fun AddTaskScreen(
             colors = CardDefaults.cardColors(containerColor = Color.White),
             elevation = CardDefaults.cardElevation(4.dp)
         ) {
-            Column(
-                modifier = Modifier.padding(18.dp)
-            ) {
+            Column(modifier = Modifier.padding(18.dp)) {
                 OutlinedTextField(
                     value = title,
                     onValueChange = {
@@ -82,11 +75,7 @@ fun AddTaskScreen(
 
                 if (errorMessage.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        text = errorMessage,
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                    Text(errorMessage, color = MaterialTheme.colorScheme.error)
                 }
 
                 Spacer(modifier = Modifier.height(22.dp))
@@ -97,7 +86,7 @@ fun AddTaskScreen(
                             errorMessage = "Please enter both title and description."
                         } else {
                             val task = Task(
-                                id = (0..1000).random(),
+                                id = existingTask?.id ?: (0..1000).random(),
                                 title = title,
                                 description = description
                             )
@@ -105,12 +94,10 @@ fun AddTaskScreen(
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF0D6EFD)
-                    ),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0D6EFD)),
                     shape = RoundedCornerShape(14.dp)
                 ) {
-                    Text("Save Task", color = Color.White)
+                    Text(if (isEditMode) "Update Task" else "Save Task", color = Color.White)
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))

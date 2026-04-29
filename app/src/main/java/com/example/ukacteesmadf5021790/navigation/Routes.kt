@@ -9,4 +9,10 @@ object Routes {
     const val TaskDetails = "task_details/{taskId}"
 
     fun taskDetails(taskId: Int): String = "task_details/$taskId"
+
+    const val EditTask = "edit_task/{taskId}"
+
+    fun editTask(taskId: Int): String {
+        return "edit_task/$taskId"
+    }
 }
